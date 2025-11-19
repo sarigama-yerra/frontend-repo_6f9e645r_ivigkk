@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TemplateGallery from './components/TemplateGallery'
@@ -6,6 +7,19 @@ import Pricing from './components/Pricing'
 import Freebies from './components/Freebies'
 
 function App() {
+  useEffect(() => {
+    // Seed default templates/tiers/products on first load (idempotent)
+    const seed = async () => {
+      try {
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+        await fetch(`${baseUrl}/api/seed`, { method: 'POST' })
+      } catch {
+        // ignore if backend not available
+      }
+    }
+    seed()
+  }, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       <Navbar />
