@@ -1,22 +1,34 @@
-import { useEffect, useState } from 'react'
-
-export default function Freebies(){
-  const [items, setItems] = useState([])
-  const base = import.meta.env.VITE_BACKEND_URL
-  useEffect(()=>{
-    (async()=>{
-      try{ const r = await fetch(`${base}/api/freebies`); setItems(await r.json()) }catch(e){ console.error(e) }
-    })()
-  },[])
+export default function Freebies() {
+  const freebies = [
+    {
+      title: 'Digital Detox Pack',
+      desc: '7-day phone-lite ritual with printable cards',
+      link: '#'
+    },
+    {
+      title: 'Manifestation Mini eBook',
+      desc: 'Scripting, affirmations, and a 3-step night ritual',
+      link: '#'
+    },
+    {
+      title: 'Morning Mantra Audio',
+      desc: '5-minute breath + blessing to start radiant',
+      link: '#'
+    }
+  ]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      {items.map((f)=> (
-        <a href={f.url} key={f._id} className="rounded-xl border border-emerald-900/40 bg-emerald-950/30 p-4 text-emerald-100 hover:border-emerald-400 transition" target="_blank">
-          <div className="text-lg font-semibold mb-1">{f.title}</div>
-          <div className="text-emerald-300/80 text-sm capitalize">{f.kind}</div>
-        </a>
-      ))}
-    </div>
+    <section id="freebies" className="max-w-6xl mx-auto px-4 py-16">
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Free spiritual goodies</h2>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {freebies.map((f)=> (
+          <a key={f.title} href={f.link} className="group rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 transition">
+            <h3 className="text-white font-semibold">{f.title}</h3>
+            <p className="text-white/70 text-sm mt-1">{f.desc}</p>
+            <span className="inline-block mt-3 text-xs text-fuchsia-200/90 bg-fuchsia-500/10 px-2 py-1 rounded">Free</span>
+          </a>
+        ))}
+      </div>
+    </section>
   )
 }
